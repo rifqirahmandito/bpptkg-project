@@ -1,0 +1,359 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+    <div class="charts">
+        <canvas id="trace1chart" height="50"></canvas>
+    </div>
+
+    <div class="charts">
+        <canvas id="trace2chart" height="50"></canvas>
+    </div>
+
+    <div class="charts">
+        <canvas id="trace3chart" height="50"></canvas>
+    </div>
+
+    <div class="charts">
+        <canvas id="trace4chart" height="50"></canvas>
+    </div>
+
+    <div class="charts">
+        <canvas id="trace5chart" height="50"></canvas>
+    </div>
+{% endblock contents %}
+
+{% block scripts %}
+    <script>
+
+    // setup for trace1
+    const trace1data = {
+        labels: [{% for item in trace1Time %} {{item}}, {% endfor %}],
+        datasets: [{
+            data: [{% for item in trace1 %} {{item}}, {% endfor %}],
+            label: 'trace1',
+            borderColor: 'rgb(0, 102, 204)',
+            borderWidth: 1.5,
+            pointRadius: null,
+            fill: false
+        }]
+    };
+
+    // setup for trace2
+    const trace2data = {
+        labels: [{% for item in trace2Time %} {{item}}, {% endfor %}],
+        datasets: [{
+            data: [{% for item in trace2 %} {{item}}, {% endfor %}],
+            label: 'trace2',
+            borderColor: 'rgb(206, 36, 36)',
+            borderWidth: 1.5,
+            pointRadius: null,
+            fill: false
+        }]
+    };
+    
+    // setup for trace3
+    const trace3data = {
+        labels: [{% for item in trace3Time %} {{item}}, {% endfor %}],
+        datasets: [{
+            data: [{% for item in trace3 %} {{item}}, {% endfor %}],
+            label: 'trace3',
+            borderColor: 'rgb(45, 159, 49)',
+            borderWidth: 1.5,
+            pointRadius: null,
+            fill: false
+        }]
+    };
+
+    // setup for trace4
+    const trace4data = {
+        labels: [{% for item in trace4Time %} {{item}}, {% endfor %}],
+        datasets: [{
+            data: [{% for item in trace4 %} {{item}}, {% endfor %}],
+            label: 'trace4',
+            borderColor: 'rgb(255, 144, 0)',
+            borderWidth: 1.5,
+            pointRadius: null,
+            fill: false
+        }]
+    };
+
+    // setup for trace5
+    const trace5data = {
+        labels: [{% for item in trace5Time %} {{item}}, {% endfor %}],
+        datasets: [{
+            data: [{% for item in trace5 %} {{item}}, {% endfor %}],
+            label: 'trace5',
+            borderColor: 'rgb(186, 49, 140)',
+            borderWidth: 1.5,
+            pointRadius: null,
+            fill: false
+        }]
+    };
+    
+    // config for trace1
+    const trace1config = {
+        type: 'line',
+        data: trace1data,
+        options: {
+            animation: false,
+            onClick: testClick1,
+            title: {
+                display: true,
+                text: 'Seismogram'
+            },
+            scales: {
+                x: {
+                    type: 'timeseries',
+                    time: {
+                        tooltipFormat: 'YYYY-MM-DDTHH:mm:ss.SS',
+                        displayFormats: 'YYYY-MM-DDTHH:mm:ss.SS', 
+                        parser: function(date) {
+                            return moment(date);
+                        }
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0,
+                        minRotation: 0,
+                        maxTicksLimit: 5,
+                        align: 'start'
+                    }
+                }
+            }
+        }
+    };
+
+    // config for trace 2
+    const trace2config = {
+        type: 'line',
+        data: trace2data,
+        options: {
+            animation: false,
+            onClick: testClick2,
+            title: {
+                display: true,
+                text: 'Seismogram'
+            },
+            scales: {
+                x: {
+                    type: 'timeseries',
+                    time: {
+                        tooltipFormat: 'YYYY-MM-DDTHH:mm:ss.SS',
+                        displayFormats: 'YYYY-MM-DDTHH:mm:ss.SS', 
+                        parser: function(date) {
+                            return moment(date);
+                        }
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0,
+                        minRotation: 0,
+                        maxTicksLimit: 5,
+                        align: 'start'
+                    }
+                }
+            }
+        }
+    };
+    
+    // config for trace 3
+    const trace3config = {
+        type: 'line',
+        data: trace3data,
+        options: {
+            animation: false,
+            onClick: testClick3,
+            title: {
+                display: true,
+                text: 'Seismogram'
+            },
+            scales: {
+                x: {
+                    type: 'timeseries',
+                    time: {
+                        tooltipFormat: 'YYYY-MM-DDTHH:mm:ss.SS',
+                        displayFormats: 'YYYY-MM-DDTHH:mm:ss.SS', 
+                        parser: function(date) {
+                            return moment(date);
+                        }
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0,
+                        minRotation: 0,
+                        maxTicksLimit: 5,
+                        align: 'start'
+                    }
+                }
+            }
+        }
+    };
+
+    // config for trace4
+    const trace4config = {
+        type: 'line',
+        data: trace4data,
+        options: {
+            animation: false,
+            onClick: testClick4,
+            title: {
+                display: true,
+                text: 'Seismogram'
+            },
+            scales: {
+                x: {
+                    type: 'timeseries',
+                    time: {
+                        tooltipFormat: 'YYYY-MM-DDTHH:mm:ss.SS',
+                        displayFormats: 'YYYY-MM-DDTHH:mm:ss.SS', 
+                        parser: function(date) {
+                            return moment(date);
+                        }
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0,
+                        minRotation: 0,
+                        maxTicksLimit: 5,
+                        align: 'start'
+                    }
+                }
+            }
+        }
+    };
+
+    // config for trace5
+    const trace5config = {
+        type: 'line',
+        data: trace5data,
+        options: {
+            animation: false,
+            onClick: testClick5,
+            title: {
+                display: true,
+                text: 'Seismogram'
+            },
+            scales: {
+                x: {
+                    type: 'timeseries',
+                    time: {
+                        tooltipFormat: 'YYYY-MM-DDTHH:mm:ss.SS',
+                        displayFormats: 'YYYY-MM-DDTHH:mm:ss.SS', 
+                        parser: function(date) {
+                            return moment(date);
+                        }
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0,
+                        minRotation: 0,
+                        maxTicksLimit: 5,
+                        align: 'start'
+                    }
+                }
+            }
+        }
+    };
+
+    // render for trace1                     
+    const trace1chart = new Chart(
+        document.getElementById('trace1chart'),
+        trace1config
+    );
+
+    // render for trace2
+    const trace2chart = new Chart(
+        document.getElementById('trace2chart'),
+        trace2config
+    );
+
+    // render for trace3
+    const trace3chart = new Chart(
+        document.getElementById('trace3chart'),
+        trace3config
+    );
+
+    // render for trace4
+    const trace4chart = new Chart(
+        document.getElementById('trace4chart'),
+        trace4config
+    );
+
+    // render for trace5
+    const trace5chart = new Chart(
+        document.getElementById('trace5chart'),
+        trace5config
+    );
+
+    // function for handling clicking event for trace1
+    function testClick1(evt){
+        var activePoints = trace1chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        console.log(activePoints);
+        if(activePoints.length){
+            var timeStamp = new Date(activePoints[0].element.parsed.x).toISOString();
+            var displacement = activePoints[0].element.parsed.y;
+            alert(`Timestamp: ${timeStamp}\nDisplacement: ${displacement}`)
+            //window.location.href = 'http://127.0.0.1:8000/chart/chart2/?displacement=' + displacement + '&timeStamp=' + timeStamp
+        }
+        else {
+        }
+    };
+
+    // function for handling clicking event for trace2
+    function testClick2(evt){
+        var activePoints = trace2chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        console.log(activePoints);
+        if(activePoints.length){
+            var timeStamp = new Date(activePoints[0].element.parsed.x).toISOString();
+            var displacement = activePoints[0].element.parsed.y;
+            alert(`Timestamp: ${timeStamp}\nDisplacement: ${displacement}`)
+            //window.location.href = 'http://127.0.0.1:8000/chart/chart2/?displacement=' + displacement + '&timeStamp=' + timeStamp
+        }
+        else {
+        }
+    };
+
+    // function for handling clicking event for trace3
+    function testClick3(evt){
+        var activePoints = trace3chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        console.log(activePoints);
+        if(activePoints.length){
+            var timeStamp = new Date(activePoints[0].element.parsed.x).toISOString();
+            var displacement = activePoints[0].element.parsed.y;
+            alert(`Timestamp: ${timeStamp}\nDisplacement: ${displacement}`)
+            //window.location.href = 'http://127.0.0.1:8000/chart/chart2/?displacement=' + displacement + '&timeStamp=' + timeStamp
+        }
+        else {
+        }
+    };
+
+    // function for handling clicking event for trace4
+    function testClick4(evt){
+        var activePoints = trace4chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        console.log(activePoints);
+        if(activePoints.length){
+            var timeStamp = new Date(activePoints[0].element.parsed.x).toISOString();
+            var displacement = activePoints[0].element.parsed.y;
+            alert(`Timestamp: ${timeStamp}\nDisplacement: ${displacement}`)
+            //window.location.href = 'http://127.0.0.1:8000/chart/chart2/?displacement=' + displacement + '&timeStamp=' + timeStamp
+        }
+        else {
+        }
+    };
+    
+    // function for handling clicking event for trace5
+    function testClick5(evt){
+        var activePoints = trace5chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        console.log(activePoints);
+        if(activePoints.length){
+            var timeStamp = new Date(activePoints[0].element.parsed.x).toISOString();
+            var displacement = activePoints[0].element.parsed.y;
+            alert(`Timestamp: ${timeStamp}\nDisplacement: ${displacement}`)
+            //window.location.href = 'http://127.0.0.1:8000/chart/chart2/?displacement=' + displacement + '&timeStamp=' + timeStamp
+        }
+        else {
+        }
+    };
+
+  </script>
+{% endblock scripts %}

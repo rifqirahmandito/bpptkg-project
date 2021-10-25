@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+    <div id="main" style="width: auto;height:400px;"></div>
+{% endblock contents %}
+
+{% block scripts %}
+    <script type="text/javascript">
+
+        // setup
+        var myChart = echarts.init(document.getElementById('main'));
+
+        const trace2 = [
+            {% for item in tr2 %}
+                {{item}},
+            {% endfor %}
+        ];
+
+        const grid = [
+            { top: '0%', bottom: '20%'},
+            { top: '20%', bottom: '40%'},
+            { top: '40%', bottom: '60%'},
+            { top: '60%', bottom: '80%'},
+            { top: '80%', bottom: '100%'}
+        ];
+
+        const yAxis = [
+            {
+                type: 'value'
+            },
+            {
+                gridIndex: 1,
+                type: 'value'
+            },
+            {
+                gridIndex: 2,
+                type: 'value'
+            },
+            {
+                gridIndex: 3,
+                type: 'value'
+            },
+            {
+                gridIndex: 4,
+                type: 'value'
+            }
+        ];
+
+        const xAxis = [
+            {
+                type: 'time'
+            },
+            {
+                gridIndex: 1,
+                type: 'time'
+            },
+            {
+                gridIndex: 2,
+                type: 'time'
+            },
+            {
+                gridIndex: 3,
+                type: 'time'
+            },
+            {
+                gridIndex: 4,
+                type: 'time'
+            }
+        ];
+
+        const series = [
+            {
+                type: 'line',
+                data: trace2,
+            }, 
+            {
+                type: 'line',
+                data: trace2,
+                yAxisIndex: 1
+            }, 
+            {
+                type: 'line',
+                data: trace2,
+                yAxisIndex: 2
+            }, 
+            {
+                type: 'line',
+                data: trace2,
+                yAxisIndex: 3
+            },
+            {
+                type: 'line',
+                data: trace2,
+                yAxisIndex: 4
+            }
+        ];
+        
+        // config
+        var option = {
+            animation: 'false',
+            title: {
+                text: 'stream.msd',
+                left: 'center'
+            },
+            tooltip: {
+                position: 'top'
+            },
+            grid: grid,
+            series: series,
+            dataZoom: [{
+                show: 'true'
+            }],
+            xAxis: xAxis,
+            yAxis: yAxis
+        };
+
+        // render options
+        myChart.setOption(option);
+
+        myChart.on('click', params => {
+            alert(params.value); 
+        });
+
+    </script>
+{% endblock scripts %}

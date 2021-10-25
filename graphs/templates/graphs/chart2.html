@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Seismogram2{% endblock title %}
+
+{% block scripts %}
+<!-- script tag -->
+<script>
+$(document).ready(function(){
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    var myChart2 = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [{% for item in Time2 %} {{item}}, {% endfor %}],
+            datasets: [{
+                label: "stream.msd",
+                data: [{% for item in mSEED2 %} {{item}}, {% endfor %}],
+                borderColor: 'rgb(0, 102, 204)',
+                borderWidth: 1.5,
+                pointRadius: 0.5,
+                fill: false,
+            }]
+        },
+        options: {
+            animation: false,
+            onClick: testClick2,
+            title: {
+                display: true,
+                text: 'Seismogram2'
+            },
+            scales: {
+                x: {
+                    type: 'timeseries',
+                    time: {
+                        tooltipFormat: 'YYYY-MM-DDTHH:mm:ss.SS',
+                        displayFormats: 'YYYY-MM-DDTHH:mm:ss.SS', 
+                        parser: function(date) {
+                            return moment(date);
+                        }
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0,
+                        minRotation: 0,
+                        maxTicksLimit: 5,
+                        align: 'start'
+                    }
+                }
+            }
+        }
+    });
+
+    // function for handling clicking event
+    function testClick2(evt){
+        var activePoints = myChart2.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        console.log(activePoints);
+        if(activePoints.length){
+            var timeStamp = new Date(activePoints[0].element.parsed.x).toISOString();
+            var displacement = activePoints[0].element.parsed.y;
+            alert(`Timestamp: ${timeStamp} \nDisplacement: ${displacement}`);
+        }
+        else {
+        }
+    }
+})
+</script>
+<!-- end of script tag -->
+{% endblock scripts %}
+
+{% block content %}
+    <canvas id="myChart2" width="300" height=100"></canvas>
+{% endblock content %}

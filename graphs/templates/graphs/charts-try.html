@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+    <canvas id="trace1Chart" width="auto" height="100"></canvas>
+{% endblock contents %}
+
+{% block scripts %}
+    <script>
+        // setup
+        var trace1Data = {
+            labels: [{% for item in labels %} {{item}}, {% endfor %}],
+            datasets: [{
+                // data: {% for key, value in trace1.items %} {{key}}: {{value}}, {% endfor %},
+                label: 'trace1',
+                data: {{trace1}},
+                borderColor: 'rgb(0, 102, 204)',
+                borderWidth: 1.5,
+                pointRadius: null,
+                fill: false
+            },
+            {
+                label: 'trace2',
+                data: {{trace2}},
+                borderColor: 'rgb(0, 200, 204)',
+                borderWidth: 1.5,
+                pointRadius: null,
+                fill: false
+            }
+            ]
+        };
+
+        // config
+        var trace1Config = {
+            type: 'line',
+            data: trace1Data,
+            options: {
+                animation: false,
+                onClick: testClick1,
+                title: {
+                    display: true,
+                    text: 'Seismogram'
+                },
+                scales: {
+                    x: {
+                        type: 'timeseries',
+                        time: {
+                            tooltipFormat: 'YYYY-MM-DDTHH:mm:ss.SS',
+                            displayFormats: 'YYYY-MM-DDTHH:mm:ss.SS', 
+                            parser: function(date) {
+                                return moment.unix(date);
+                            }
+                        },
+                        ticks: {
+                            autoSkip: true,
+                            maxRotation: 0,
+                            minRotation: 0,
+                            maxTicksLimit: 5,
+                            align: 'start'
+                        }
+                    }
+                },
+                plugins: {
+                    zoom: {
+                        zoom: {
+                            wheel: {
+                                enabled: true,
+                                speed: 0.1
+                            },
+                            drag: {
+                                enabled: true,
+                                backgroundColor: 'rgba(225,225,225,0.3)',
+                                borderColor: 'rgba(225,225,225)',
+                                borderWidth: 1,
+                                modifierKey: 'alt'
+                            },
+                            mode: 'xy',
+                        },
+                        pan: {
+                            enabled: true,
+                            modifierKey: 'ctrl',
+                            mode: 'xy'
+                        }
+                    },
+                }
+            }
+        };
+
+        // render
+        var trace1Chart = new Chart(
+            document.getElementById('trace1Chart'),
+            trace1Config
+        );
+
+        function testClick1(evt){
+            var activePoints = trace1Chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            console.log(activePoints);
+            if(activePoints.length){
+                var timeStamp = new Date(activePoints[0].element.parsed.x).toISOString();
+                var displacement = activePoints[0].element.parsed.y;
+                alert(`Timestamp: ${timeStamp}\nDisplacement: ${displacement}`)
+                //window.location.href = 'http://127.0.0.1:8000/chart/chart2/?displacement=' + displacement + '&timeStamp=' + timeStamp
+            }
+            else {
+            }
+        };
+    </script>
+{% endblock scripts %}
