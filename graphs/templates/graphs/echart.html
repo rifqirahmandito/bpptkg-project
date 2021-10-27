@@ -10,19 +10,62 @@
         // setup
         var myChart = echarts.init(document.getElementById('main'));
 
+        const makeIndex = (n) => {
+            return [...Array(n).keys()]
+        };
+
+        const createRowGrid = (
+            nRows,
+            { margin = 1, top = 5, right = 10, bottom = 5, left = 10 } = {}
+        ) => {
+            const availableSpace = 100 - (top + bottom);
+            const containerSize = (availableSpace - (nRows - 1) * margin) / nRows;
+            const indices = makeIndex(nRows);
+
+            return indices.map((idx) => {
+                const topOffset = idx * (containerSize + margin) + top;
+                const height = containerSize - margin;
+
+                return {
+                    top: `${topOffset}%`,
+                    height: `${height}%`,
+                    left: `${left}%`,
+                    right: `${right}%`,
+                }
+            })
+        };
+
+        const trace1 = [
+            {% for item in tr1 %}
+                {{item}},
+            {% endfor %}
+        ];
+
         const trace2 = [
             {% for item in tr2 %}
                 {{item}},
             {% endfor %}
         ];
 
-        const grid = [
-            { top: '0%', bottom: '20%'},
-            { top: '20%', bottom: '40%'},
-            { top: '40%', bottom: '60%'},
-            { top: '60%', bottom: '80%'},
-            { top: '80%', bottom: '100%'}
+        const trace3 = [
+            {% for item in tr3 %}
+                {{item}},
+            {% endfor %}
         ];
+
+        const trace4 = [
+            {% for item in tr4 %}
+                {{item}},
+            {% endfor %}
+        ];
+
+        const trace5 = [
+            {% for item in tr5 %}
+                {{item}},
+            {% endfor %}
+        ];
+
+        const grid = createRowGrid(5, {bottom: 30});
 
         const yAxis = [
             {type: 'value'},
@@ -41,11 +84,11 @@
         ];
 
         const series = [
-            {type: 'line', data: trace2, symbol: 'none'}, 
-            {type: 'line', data: trace2, yAxisIndex: 1, xAxisIndex: 1, symbol: 'none'}, 
-            {type: 'line', data: trace2, yAxisIndex: 2, xAxisIndex: 2, symbol: 'none'}, 
-            {type: 'line', data: trace2, yAxisIndex: 3, xAxisIndex: 3, symbol: 'none'},
-            {type: 'line', data: trace2, yAxisIndex: 4, xAxisIndex: 4, symbol: 'none'}
+            {type: 'line', data: trace1, symbolSize: 1.5}, 
+            {type: 'line', data: trace2, yAxisIndex: 1, xAxisIndex: 1, symbolSize: 1.5}, 
+            {type: 'line', data: trace3, yAxisIndex: 2, xAxisIndex: 2, symbolSize: 1.5}, 
+            {type: 'line', data: trace4, yAxisIndex: 3, xAxisIndex: 3, symbolSize: 1.5},
+            {type: 'line', data: trace5, yAxisIndex: 4, xAxisIndex: 4, symbolSize: 1.5}
         ];
         
         // config
