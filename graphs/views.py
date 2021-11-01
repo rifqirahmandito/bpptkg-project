@@ -10,7 +10,7 @@ class DataChartViewEChart(TemplateView):
 
         context = super().get_context_data(**kwargs)
 
-        st = read('/home/rifqi/Downloads/stream.msd')
+        st = read(r'D:\ugm\akademik\semester-7\bpptkg-project\stream.msd')
 
         def arrayFunc(stream, idx, nPoints):
 
@@ -22,10 +22,10 @@ class DataChartViewEChart(TemplateView):
                 mainArray.append(xyArray)
             return(mainArray)
 
-        endpoint = 250
+        endpoint = 1000
 
         tr1 = arrayFunc(st, 0, endpoint)
-        tr2 = arrayFunc(st, 1, endpoint)
+        tr2 = arrayFunc(st, 1, 500)
         tr3 = arrayFunc(st, 2, endpoint)
         tr4 = arrayFunc(st, 3, endpoint)
         tr5 = arrayFunc(st, 4, endpoint)
